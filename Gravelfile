@@ -1,0 +1,3 @@
+name: gravel-userd-web
+requires: gravel-common gravel-userd
+requires-apt: nginx python-twisted python-twisted-names
