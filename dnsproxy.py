@@ -1,16 +1,13 @@
-import socket
-
-from twisted.internet.protocol import Factory, Protocol
 from twisted.internet import reactor
 from twisted.protocols import dns
-from twisted.names import client, server, common
+from twisted.names import server, common
 from twisted.internet import defer
 from twisted.python import failure
 
 verbose = 1
 
 class Resolver(common.ResolverBase):
-    def __init__(self, ttl = 60 * 60):
+    def __init__(self, ttl=5 * 60):
         common.ResolverBase.__init__(self)
         self.ttl = ttl
 
