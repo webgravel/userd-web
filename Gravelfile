@@ -1,3 +1,9 @@
 name: gravel-userd-web
-requires: gravel-common gravel-userd
-requires-apt: nginx python-twisted python-twisted-names
+requires: gravel-common gravel-userd nodejs
+requires-apt: acl
+
+start: ./start.sh
+
+symlinks:
+- [updatecustom.py, /gravel/pkg/gravel-userd/updatecustom.d/web]
+- [get_target.py, /usr/local/bin/gravel-web-gettarget]
