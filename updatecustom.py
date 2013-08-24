@@ -18,7 +18,7 @@ user = users.User(args.uid)
 
 # todo: remove old domains
 
-for prop in user.data.custom['web']:
+for prop in user.data.custom.get('web', []):
     host = prop['host']
     port = int(prop['port'])
     domain = domains.Domain(host)
