@@ -21,7 +21,9 @@ user = users.User(args.uid)
 for prop in user.data.custom.get('web', []):
     host = prop['host']
     port = int(prop['port'])
+    forward = prop.get('forward')
     domain = domains.Domain(host)
     domain.data.port = port
     domain.data.owner = args.uid
+    domain.data.forward = forward
     domain.save()

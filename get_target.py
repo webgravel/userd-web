@@ -17,8 +17,9 @@ except KeyError:
 
 owner = domain.data.owner
 port = domain.data.port
+forward = domain.data.forward
 
-ip = userns.get_ip(owner * 4 + 2) # host address
-users.User(owner).activate()
-
-print ip, port
+if not forward:
+    forward = userns.get_ip(owner * 4 + 2) # host address
+    users.User(owner).activate()
+print forward, port
