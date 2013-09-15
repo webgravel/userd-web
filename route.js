@@ -1,8 +1,8 @@
 var net = require('net');
 var http = require('http');
 var child_process = require('child_process');
-var cache_timeout = 20 * 1000
 
+var cache_timeout = 20 * 1000
 var cache = {};
 
 function get_addr_for(host, ok, error) {
@@ -32,12 +32,22 @@ function get_addr_for(host, ok, error) {
     })
 }
 
+function process_ip(ip) {
+    if(/^::ffff:[^:]+$/.test(ip)) {
+        // normalize ipv6 form of ipv4 address to ipv4 address
+        ip = ip.slice(7);
+    }
+    return ip;
+}
+
 var server = http.createServer(function(req, res) {
     var host = req.headers.host
     get_addr_for(host, function(addr) {
         var remote_ip = req.connection.remoteAddress;
         console.log(remote_ip, req.method, host, req.url,
                    '->', addr.host, addr.port);
+        var remote_addr = process_ip(req.connection.remoteAddress)
+        req.headers['X-Real-Ip'] = req.headers['X-Forwarded-For'] = remote_addr;
         var proxy_request = http.request({
             hostname: addr.host,
             port: addr.port,
