@@ -1,5 +1,6 @@
 #!/usr/bin/env python2.7
 import sys
+import json
 
 sys.path.append('/gravel/pkg/gravel-common')
 sys.path.append('/gravel/pkg/gravel-userd')
@@ -22,4 +23,9 @@ forward = domain.data.forward
 if not forward:
     forward = userns.get_ip(owner * 4 + 2) # host address
     users.User(owner).activate()
-print forward, port
+print json.dumps({
+    'host': forward,
+    'port': port,
+    'key': domain.data.key,
+    'cert': domain.data.cert,
+})

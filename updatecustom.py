@@ -26,4 +26,6 @@ for prop in user.data.custom.get('web', []):
     domain.data.port = port
     domain.data.owner = args.uid
     domain.data.forward = forward
+    domain.data.cert = prop.get('cert')
+    domain.data.key = prop.get('key')
     domain.save()
